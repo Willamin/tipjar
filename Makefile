@@ -24,3 +24,9 @@ upload:
 
 prep:
 	go get
+
+site:
+	$(MAKE) clean
+	$(MAKE) prep
+	$(MAKE) build
+	./tipjar

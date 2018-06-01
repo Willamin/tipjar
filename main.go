@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -21,27 +22,46 @@ type Product struct {
 	Name string
 }
 
-func die(err error) (events.APIGatewayProxyResponse, error) {
+func allProducts() []Product {
+	return []Product{
+		Product{
+			Cost: 100,
+			Name: "Tip",
+		},
+	}
+}
+
+func errorResponse(err error) (events.APIGatewayProxyResponse, error) {
 	return events.APIGatewayProxyResponse{
 		Body:       "Something went wrong",
 		StatusCode: 500,
 	}, err
 }
 
-func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	log.Printf("Handling request")
-	stripe.Key, _ = os.LookupEnv(StripeApiKey)
+func getTokenFromBody(body string) (string, error) {
+	q, err := url.ParseQuery(body)
 
-	q, err := url.ParseQuery(request.Body)
-	if err != nil {
-		return die(err)
-	}
 	token := q.Get("stripeToken")
+	return token, err
+}
 
-	product := Product{
-		Cost: 100,
-		Name: "Tip",
+func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	var err error = nil
+
+	log.Printf("Handling request")
+	key, found := os.LookupEnv(StripeApiKey)
+	stripe.Key = key
+	if found == false {
+		err = errors.New(fmt.Sprintf("%s not found", StripeApiKey))
+		return errorResponse(err)
 	}
+
+	token, err := getTokenFromBody(request.Body)
+	if err != nil {
+		return errorResponse(err)
+	}
+
+	product := allProducts()[0]
 
 	chargeParams := &stripe.ChargeParams{
 		Amount:   product.Cost,
@@ -51,6 +71,9 @@ func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProx
 	chargeParams.SetSource(token)
 
 	_, err = charge.New(chargeParams)
+	if err != nil {
+		return errorResponse(err)
+	}
 
 	headers := map[string]string{
 		"Location": "https://tip.wflewis.com/thanks",
@@ -59,7 +82,11 @@ func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProx
 	return events.APIGatewayProxyResponse{
 		StatusCode: 302,
 		Headers:    headers,
-	}, err
+	}, nil
+}
+
+func BuildSite() {
+	log.Printf("build function not implemented yet")
 }
 
 func main() {
@@ -70,6 +97,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	log.Printf("Not running in AWS lambda environment, exiting.")
-	os.Exit(1)
+	log.Printf("Not running in AWS lambda environment, building website.")
+	BuildSite()
+	os.Exit(0)
 }
