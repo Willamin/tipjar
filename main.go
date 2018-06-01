@@ -17,10 +17,9 @@ const (
 	StripeApiKey             = "STRIPE_API_KEY"
 )
 
-type Request struct {
-    Token     string `schema:"stripeToken"`
-    TokenType string `schema:"stripeTokenType"`
-    Email     string `schema:"stripeEmail"`
+type Product struct {
+  Cost uint64
+  Name string
 }
 
 func die(err error) (events.APIGatewayProxyResponse, error) {
@@ -38,22 +37,26 @@ func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProx
   if err != nil {
     return die(err)
   }
-  email := q["stripeEmail"][0]
+  token := q.Get("stripeToken")
 
-  return events.APIGatewayProxyResponse{
-    Body:       fmt.Sprintf("Thanks, %s!", email),
-    StatusCode: 200,
-  }, nil
-
+  product := Product{
+    Cost: 100,
+    Name: "Tip",
+  }
 
 	chargeParams := &stripe.ChargeParams{
-		Amount:   2000,
+		Amount:   product.Cost,
 		Currency: "usd",
-		Desc:     "Charge for isabella.brown@example.com",
+		Desc:     fmt.Sprintf("Charge for %s", product.Name),
 	}
-	chargeParams.SetSource("tok_visa")
-	_, err = charge.New(chargeParams)
-  return events.APIGatewayProxyResponse{}, err
+  chargeParams.SetSource(token)
+
+	chargeResponse, err := charge.New(chargeParams)
+
+  return events.APIGatewayProxyResponse{
+    Body:     fmt.Sprintf("%#v", chargeResponse),
+    StatusCode: 200,
+    }, err
 }
 
 func main() {
