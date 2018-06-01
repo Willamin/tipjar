@@ -21,3 +21,6 @@ all:
 
 upload:
 	/usr/local/bin/aws --profile personal lambda update-function-code --function-name TipJar --zip-file fileb://$(shell pwd)/tipjar.zip
+
+prep:
+	go get
