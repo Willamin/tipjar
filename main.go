@@ -1,14 +1,14 @@
 package main
 
 import (
-  "fmt"
-	"os"
+	"fmt"
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-  "github.com/aws/aws-lambda-go/events"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/charge"
 	"log"
-  "net/url"
+	"net/url"
+	"os"
 )
 
 // Environment variables
@@ -18,45 +18,49 @@ const (
 )
 
 type Product struct {
-  Cost uint64
-  Name string
+	Cost uint64
+	Name string
 }
 
 func die(err error) (events.APIGatewayProxyResponse, error) {
-   return events.APIGatewayProxyResponse{
-    Body:       "Something went wrong",
-    StatusCode: 500,
-  }, err
+	return events.APIGatewayProxyResponse{
+		Body:       "Something went wrong",
+		StatusCode: 500,
+	}, err
 }
 
-func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error)  {
+func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	log.Printf("Handling request")
 	stripe.Key, _ = os.LookupEnv(StripeApiKey)
 
-  q, err := url.ParseQuery(request.Body)
-  if err != nil {
-    return die(err)
-  }
-  token := q.Get("stripeToken")
+	q, err := url.ParseQuery(request.Body)
+	if err != nil {
+		return die(err)
+	}
+	token := q.Get("stripeToken")
 
-  product := Product{
-    Cost: 100,
-    Name: "Tip",
-  }
+	product := Product{
+		Cost: 100,
+		Name: "Tip",
+	}
 
 	chargeParams := &stripe.ChargeParams{
 		Amount:   product.Cost,
 		Currency: "usd",
 		Desc:     fmt.Sprintf("Charge for %s", product.Name),
 	}
-  chargeParams.SetSource(token)
+	chargeParams.SetSource(token)
 
-	chargeResponse, err := charge.New(chargeParams)
+	_, err = charge.New(chargeParams)
 
-  return events.APIGatewayProxyResponse{
-    Body:     fmt.Sprintf("%#v", chargeResponse),
-    StatusCode: 200,
-    }, err
+	headers := map[string]string{
+		"Location": "https://tip.wflewis.com/thanks",
+	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: 302,
+		Headers:    headers,
+	}, err
 }
 
 func main() {
