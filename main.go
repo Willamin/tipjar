@@ -1,44 +1,51 @@
 package main
 
 import (
-  "os"
-    "context"
+	"context"
+	"os"
 
-  "log"
-  "github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/stripe/stripe-go"
+	"log"
 )
 
 // Environment variables
 const (
-  AWSLambdaFunctionVersion = "AWS_LAMBDA_FUNCTION_VERSION"
+	AWSLambdaFunctionVersion = "AWS_LAMBDA_FUNCTION_VERSION"
+	StripeApiKey             = "STRIPE_API_KEY"
 )
 
-func action() error {
-  return nil
-}
-
 func check(err error) {
-  if err != nil {
-    log.Fatal("Error: ", err)
-  }
+	if err != nil {
+		log.Fatal("Error: ", err)
+	}
 }
 
 func HandleRequest(ctx context.Context) error {
-  log.Printf("Handling request")
-  err := action()
-  log.Printf("Done handling request")
-  return err
+	log.Printf("Handling request")
+  stripe.Key = os.LookupEnv(StripeApiKey)
+  token := r.FormValue("stripeToken")
+
+  params := &stripe.ChargeParams{
+    Amount:      100,
+    Currency:    "usd",
+    Description: "Tip",
+  }
+  params.SetSource(token)
+  ch, err := charge.New(params)
+
+	log.Printf("Done handling request")
+	return err
 }
 
 func main() {
-  _, ok := os.LookupEnv(AWSLambdaFunctionVersion)
-  if ok {
-    log.Printf("Running in AWS lambda environment, starting lambda handler.")
-    lambda.Start(HandleRequest)
-    os.Exit(0)
-  }
+	_, ok := os.LookupEnv(AWSLambdaFunctionVersion)
+	if ok {
+		log.Printf("Running in AWS lambda environment, starting lambda handler.")
+		lambda.Start(HandleRequest)
+		os.Exit(0)
+	}
 
-  log.Printf("Not running in AWS lambda environment, running test request.")
-  err := action()
-  check(err)
+	log.Printf("Not running in AWS lambda environment, exiting.")
+	check(err)
 }

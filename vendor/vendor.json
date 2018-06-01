@@ -3,11 +3,39 @@
 	"ignore": "test",
 	"package": [
 		{
+			"path": "bytes",
+			"revision": ""
+		},
+		{
 			"path": "context",
 			"revision": ""
 		},
 		{
+			"path": "crypto/hmac",
+			"revision": ""
+		},
+		{
+			"path": "crypto/rand",
+			"revision": ""
+		},
+		{
+			"path": "crypto/sha256",
+			"revision": ""
+		},
+		{
+			"path": "encoding/base64",
+			"revision": ""
+		},
+		{
+			"path": "encoding/hex",
+			"revision": ""
+		},
+		{
 			"path": "encoding/json",
+			"revision": ""
+		},
+		{
+			"path": "errors",
 			"revision": ""
 		},
 		{
@@ -33,7 +61,217 @@
 			"revisionTime": "2018-04-20T04:06:44Z"
 		},
 		{
+			"path": "github.com/stripe/stripe-go",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/account",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/applepaydomain",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/balance",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/bankaccount",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/bitcoinreceiver",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/bitcointransaction",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/card",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/charge",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/client",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/countryspec",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/coupon",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/currency",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/customer",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/discount",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/dispute",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/ephemeralkey",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/event",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/exchangerate",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/fee",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/feerefund",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/fileupload",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/form",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/invoice",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/invoiceitem",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/issuerfraudrecord",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/loginlink",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/order",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/orderitem",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/orderreturn",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/paymentsource",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/payout",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/plan",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/product",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/recipient",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/recipienttransfer",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/refund",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/reversal",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/sku",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/source",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/sourcetransaction",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/sub",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/subitem",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/testing",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/threedsecure",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/token",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/topup",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/transfer",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/usagerecord",
+			"revision": ""
+		},
+		{
+			"path": "github.com/stripe/stripe-go/webhook",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "Eu9BTXJm9cIUB5zS+MkB0BG85aI=",
 			"path": "github.com/willamin/tipjar",
+			"revision": "1b6880a5dc8e186470695b527265961219230874",
+			"revisionTime": "2018-06-01T18:52:18Z"
+		},
+		{
+			"path": "io",
+			"revision": ""
+		},
+		{
+			"path": "io/ioutil",
 			"revision": ""
 		},
 		{
@@ -41,7 +279,15 @@
 			"revision": ""
 		},
 		{
+			"path": "mime/multipart",
+			"revision": ""
+		},
+		{
 			"path": "net",
+			"revision": ""
+		},
+		{
+			"path": "net/http",
 			"revision": ""
 		},
 		{
@@ -49,7 +295,19 @@
 			"revision": ""
 		},
 		{
+			"path": "net/url",
+			"revision": ""
+		},
+		{
 			"path": "os",
+			"revision": ""
+		},
+		{
+			"path": "os/exec",
+			"revision": ""
+		},
+		{
+			"path": "path/filepath",
 			"revision": ""
 		},
 		{
@@ -66,6 +324,10 @@
 		},
 		{
 			"path": "strings",
+			"revision": ""
+		},
+		{
+			"path": "sync",
 			"revision": ""
 		},
 		{
