@@ -11,7 +11,6 @@ import (
 	"os"
 )
 
-// Environment variables
 const (
 	AWSLambdaFunctionVersion = "AWS_LAMBDA_FUNCTION_VERSION"
 	StripeApiKey             = "STRIPE_API_KEY"
