@@ -1,12 +1,14 @@
 package main
 
 import (
-	"context"
+  "fmt"
 	"os"
-
 	"github.com/aws/aws-lambda-go/lambda"
+  "github.com/aws/aws-lambda-go/events"
 	"github.com/stripe/stripe-go"
+	"github.com/stripe/stripe-go/charge"
 	"log"
+  "net/url"
 )
 
 // Environment variables
@@ -15,27 +17,43 @@ const (
 	StripeApiKey             = "STRIPE_API_KEY"
 )
 
-func check(err error) {
-	if err != nil {
-		log.Fatal("Error: ", err)
-	}
+type Request struct {
+    Token     string `schema:"stripeToken"`
+    TokenType string `schema:"stripeTokenType"`
+    Email     string `schema:"stripeEmail"`
 }
 
-func HandleRequest(ctx context.Context) error {
+func die(err error) (events.APIGatewayProxyResponse, error) {
+   return events.APIGatewayProxyResponse{
+    Body:       "Something went wrong",
+    StatusCode: 500,
+  }, err
+}
+
+func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error)  {
 	log.Printf("Handling request")
-  stripe.Key = os.LookupEnv(StripeApiKey)
-  token := r.FormValue("stripeToken")
+	stripe.Key, _ = os.LookupEnv(StripeApiKey)
 
-  params := &stripe.ChargeParams{
-    Amount:      100,
-    Currency:    "usd",
-    Description: "Tip",
+  q, err := url.ParseQuery(request.Body)
+  if err != nil {
+    return die(err)
   }
-  params.SetSource(token)
-  ch, err := charge.New(params)
+  email := q["stripeEmail"][0]
 
-	log.Printf("Done handling request")
-	return err
+  return events.APIGatewayProxyResponse{
+    Body:       fmt.Sprintf("Thanks, %s!", email),
+    StatusCode: 200,
+  }, nil
+
+
+	chargeParams := &stripe.ChargeParams{
+		Amount:   2000,
+		Currency: "usd",
+		Desc:     "Charge for isabella.brown@example.com",
+	}
+	chargeParams.SetSource("tok_visa")
+	_, err = charge.New(chargeParams)
+  return events.APIGatewayProxyResponse{}, err
 }
 
 func main() {
@@ -47,5 +65,5 @@ func main() {
 	}
 
 	log.Printf("Not running in AWS lambda environment, exiting.")
-	check(err)
+	os.Exit(1)
 }
