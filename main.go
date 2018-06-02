@@ -85,10 +85,6 @@ func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProx
 	}, nil
 }
 
-func BuildSite() {
-	log.Printf("build function not implemented yet")
-}
-
 func main() {
 	_, ok := os.LookupEnv(AWSLambdaFunctionVersion)
 	if ok {
@@ -97,7 +93,6 @@ func main() {
 		os.Exit(0)
 	}
 
-	log.Printf("Not running in AWS lambda environment, building website.")
-	BuildSite()
+	log.Printf("Not running in AWS lambda environment.")
 	os.Exit(0)
 }
