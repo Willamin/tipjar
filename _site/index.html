@@ -14,7 +14,7 @@
       <p>
         While this is mostly for trying out Stripe + Jekyll + Netlify + Sinatra, feel free to buy me a coffee!
       </p>
-      <form action="https://mq7i7h1npj.execute-api.us-east-1.amazonaws.com/staging/TipJar" method="POST">
+      <form action="/.netlify/functions/payment" method="POST">
         <script
           src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="pk_test_Vo4mlNiNFZ9p265zqws5Xr0i"

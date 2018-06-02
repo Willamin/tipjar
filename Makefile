@@ -29,4 +29,5 @@ site:
 	$(MAKE) clean
 	$(MAKE) prep
 	$(MAKE) build
-	./tipjar
+	$(MAKE) pack
+	mv tipjar functions/payment
