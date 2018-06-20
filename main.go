@@ -18,15 +18,15 @@ const (
 )
 
 type Product struct {
-	Cost uint64
 	Name string
+	Cost uint64
 }
 
 func allProducts() []Product {
 	return []Product{
 		Product{
-			Cost: 100,
 			Name: "Tip",
+			Cost: 100,
 		},
 	}
 }
