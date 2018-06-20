@@ -55,7 +55,7 @@ func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProx
 	log.Printf("Handling request:")
 	log.Printf("%v", request)
 	log.Printf("Params:")
-	log.Printf("%v", request.body)
+	log.Printf("%v", request.Body)
 
 	key, found := os.LookupEnv(StripeApiKey)
 	stripe.Key = key
