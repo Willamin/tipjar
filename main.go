@@ -25,8 +25,12 @@ type Product struct {
 func allProducts() []Product {
 	return []Product{
 		Product{
-			Name: "Tip",
-			Cost: 100,
+			Name: "Sticker",
+			Cost: 200,
+		},
+		Product{
+			Name: "Hat",
+			Cost: 1000,
 		},
 	}
 }
@@ -48,7 +52,8 @@ func getTokenFromBody(body string) (string, error) {
 func HandleRequest(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var err error = nil
 
-	log.Printf("Handling request")
+	log.Printf("Handling request:")
+	log.Printf(request.Body)
 	key, found := os.LookupEnv(StripeApiKey)
 	stripe.Key = key
 	if found == false {

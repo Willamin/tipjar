@@ -1,7 +1,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="https://cdn.wflewis.com/clean.css" />
-  <title>Tipjar</title>
+  <title>Will's Shop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <meta name="description" content="Just a place to drop spare change.">
@@ -10,23 +10,45 @@
 <body>
   <div style="display:flex;justify-content:center;">
     <div style="max-width: 650px">
-      <h1>Will's Tipjar</h1>
+      <h1>Will's Shop</h1>
       <p>
-        While this is mostly for trying out Stripe + Jekyll + Netlify + Lambda, feel free to buy me a coffee!
+        This site serves as a prototype for running a small ecommerce site on a static site.
+        Middleman will be used for site generation, Netlify is used for hosting, AWS Lambda (through Netlify) is used for verifying transactions, and Stripe is used for payment processing.
       </p>
-      <form action="/.netlify/functions/payment" method="POST">
-        <script
-          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key="pk_test_Vo4mlNiNFZ9p265zqws5Xr0i"
-          data-amount="100"
-          data-name="Will's Tip Jar"
-          data-description="Simple Cup of Coffee"
-          data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-          data-locale="auto"
-          data-billing-address="true"
-          data-shipping-address="true">
-        </script>
-      </form>
+      <div style="display: flex; justify-content: space-around;">
+        <div style="border: 1px solid #444; padding: 1em; width: 200px">
+          <h3>Sticker</h3>
+          <form action="/.netlify/functions/payment" method="POST">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_Vo4mlNiNFZ9p265zqws5Xr0i"
+              data-amount="200"
+              data-name="Sticker"
+              data-description="just a sticker"
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-locale="auto"
+              data-billing-address="true"
+              data-shipping-address="true">
+            </script>
+          </form>
+        </div>
+        <div style="border: 1px solid #444; padding: 1em; width: 200px">
+          <h3>Hat</h3>
+          <form action="/.netlify/functions/payment" method="POST">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_Vo4mlNiNFZ9p265zqws5Xr0i"
+              data-amount="1000"
+              data-name="Hat"
+              data-description="not a real hat"
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-locale="auto"
+              data-billing-address="true"
+              data-shipping-address="true">
+            </script>
+          </form>
+        </div>
+      </div>
     </div>
 </div>
 
