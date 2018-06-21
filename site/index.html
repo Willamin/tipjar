@@ -22,6 +22,7 @@
       border: 2px solid #489B56;
       background-color: transparent;
       color: #489B56;
+      cursor: pointer;
     }
     button:active {
       transform:
@@ -53,6 +54,7 @@
                 token: function(token) {
                   console.log(token)
                   let data = {
+                    productSku:                       "sticker"
                     stripeToken:                      token.id,
                     stripeTokenType:                  token.type,
                     stripeEmail:                      token.email,
