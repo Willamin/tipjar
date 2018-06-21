@@ -6,6 +6,28 @@
   <meta charset="UTF-8">
   <meta name="description" content="Just a place to drop spare change.">
   <meta name="author" content="Will Lewis">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  <style>
+    button {
+      background-color: #60C175;
+      width: 100%;
+      line-height: 3em;
+      font-size: 1.4em;
+      font-weight: 600;
+      border-radius: 5px;
+      border: 2px solid transparent;
+      color: white;
+    }
+    button:hover {
+      border: 2px solid #489B56;
+      background-color: transparent;
+      color: #489B56;
+    }
+    button:active {
+      transform:
+        translateY(2px);
+    }
+  </style>
 </head>
 <body>
   <div style="display:flex;justify-content:center;">
@@ -18,8 +40,66 @@
       <div style="display: flex; justify-content: space-around;">
         <div style="border: 1px solid #444; padding: 1em; width: 200px; border-radius: 5px">
           <h3>Sticker</h3>
-          <form action="/.netlify/functions/payment" method="POST">
-            <script
+          <!-- <form action="/.netlify/functions/payment" method="POST"> -->
+            <script src="https://checkout.stripe.com/checkout.js"></script>
+            <form action="/.netlify/functions/payment" method="POST">
+            </form>
+            <button id="customButton">Purchase</button>
+            <script>
+              var handler = StripeCheckout.configure({
+                key: 'pk_test_Vo4mlNiNFZ9p265zqws5Xr0i',
+                image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+                locale: 'auto',
+                token: function(token) {
+                  let data = {
+                    stripeToken:                      token.id,
+                    stripeTokenType:                  token.type,
+                    stripeEmail:                      token.email,
+                    // stripeBillingName:                ,
+                    // stripeBillingAddressCountry:      ,
+                    // stripeBillingAddressCountryCode:  ,
+                    // stripeBillingAddressZip:          ,
+                    // stripeBillingAddressLine1:        ,
+                    // stripeBillingAddressCity:         ,
+                    // stripeBillingAddressState:        ,
+                    // stripeShippingName:               ,
+                    // stripeShippingAddressCountry:     ,
+                    // stripeShippingAddressCountryCode: ,
+                    // stripeShippingAddressZip:         ,
+                    // stripeShippingAddressLine1:       ,
+                    // stripeShippingAddressCity:        ,
+                    // stripeShippingAddressState:       ,
+                  }
+
+                  $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    success: success,
+                    dataType: dataType
+                  })
+                }
+              })
+
+              document.getElementById('customButton').addEventListener('click', function(e) {
+                // Open Checkout with further options:
+                handler.open({
+                  name: 'Sticker',
+                  description: 'just a sticker',
+                  amount: 200,
+                  // billingAddress: true,
+                  // shippingAddress: true,
+                });
+                e.preventDefault();
+              });
+
+              // Close Checkout on page navigation:
+              window.addEventListener('popstate', function() {
+                handler.close();
+              });
+            </script>
+
+            <!-- <script
               src="https://checkout.stripe.com/checkout.js" class="stripe-button"
               data-key="pk_test_Vo4mlNiNFZ9p265zqws5Xr0i"
               data-amount="200"
@@ -28,15 +108,13 @@
               data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
               data-locale="auto"
               data-billing-address="true"
-              data-shipping-address="true"
-              data-sku="sticker">
-            </script>
-            <input type="hidden" name="sku" value="sticker"/>
-          </form>
+              data-shipping-address="true">
+            </script> -->
+          <!-- </form> -->
         </div>
         <div style="border: 1px solid #444; padding: 1em; width: 200px; border-radius: 5px">
           <h3>Hat</h3>
-          <form action="/.netlify/functions/payment" method="POST">
+          <!-- <form action="/.netlify/functions/payment" method="POST">
             <script
               src="https://checkout.stripe.com/checkout.js" class="stripe-button"
               data-key="pk_test_Vo4mlNiNFZ9p265zqws5Xr0i"
@@ -46,11 +124,9 @@
               data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
               data-locale="auto"
               data-billing-address="true"
-              data-shipping-address="true"
-              data-sku="hat">
+              data-shipping-address="true">
             </script>
-            <input type="hidden" name="sku" value="hat"/>
-          </form>
+          </form> -->
         </div>
       </div>
     </div>
