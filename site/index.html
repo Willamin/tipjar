@@ -51,6 +51,7 @@
                 image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
                 locale: 'auto',
                 token: function(token) {
+                  console.log(token)
                   let data = {
                     stripeToken:                      token.id,
                     stripeTokenType:                  token.type,
@@ -70,6 +71,7 @@
                     // stripeShippingAddressCity:        ,
                     // stripeShippingAddressState:       ,
                   }
+                  console.log(data)
 
                   $.ajax({
                     type: "POST",
