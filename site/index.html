@@ -73,9 +73,11 @@
 
                   $.ajax({
                     type: "POST",
-                    url: url,
+                    url: "https://tip.wflewis.com/.netlify/functions/payment",
                     data: data,
-                    success: success,
+                    success: function() {
+                      window.location.href = "/thanks"
+                    },
                     dataType: dataType
                   })
                 }
